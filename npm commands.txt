@@ -1,0 +1,40 @@
+COMMAND PROMPT commands =>
+
+node -v
+
+npm -v
+
+npm install -g typescript
+
+npm list -g
+
+
+VSCode GitBash commands =>
+
+npm init -y
+
+npm install typescript
+
+npx tsc first.ts
+
+npx tsc -w 	//watch mode for ts commands
+
+
+React.js commands =>
+
+npx create-react-app@latest my-react-app
+
+npm start
+
+
+
+
+
+
+
+
+
+
+
+
+
