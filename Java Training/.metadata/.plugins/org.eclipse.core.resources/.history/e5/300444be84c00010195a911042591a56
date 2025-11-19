@@ -1,0 +1,101 @@
+package com.restapiproject.hotelMgmt.repository;
+
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
+
+import com.restapiproject.hotelMgmt.model.Hotel;
+import com.restapiproject.hotelMgmt.util.HotelRowMapper;
+
+@Repository
+public class HotelDaoImpl implements HotelDao {
+
+	private final JdbcTemplate jdbcTemplate;
+
+	public HotelDaoImpl(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
+	@Override
+	public Hotel save(Hotel hotel) {
+		String sql = "insert into hotels(id, name, address,total_rooms, available_rooms,\n "
+				+ "price_per_night, created_at, updated_at) values (?,?,?,?,?,?,?,?)";
+		KeyHolder keyholder = new GeneratedKeyHolder();
+		int updated = jdbcTemplate.update(con -> {
+			PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			ps.setString(2, hotel.getName());
+			ps.setString(3, hotel.getAddress());
+			ps.setInt(4, hotel.getTotal_rooms());
+			ps.setInt(5, hotel.getAvailable_rooms());
+			ps.setBigDecimal(6, hotel.getPrice_per_night());
+			return ps;
+		}, keyholder);
+
+		Number key = keyholder.getKey();
+		if (key != null) {
+			hotel.setId(key.longValue());
+		}
+
+		if (updated > 0) {
+			System.out.println("Hotel is created");
+		} else {
+			System.out.println("Cannot add a new hotel ");
+		}
+		return hotel;
+	}
+
+	@Override
+	public Optional<Hotel> findById(Long id) {
+		String sql = "select * from hotels where id = ?";
+		List<Hotel> h = jdbcTemplate.query(sql, new HotelRowMapper(), id);
+		if (h.isEmpty())return Optional.empty();
+		return Optional.of(h.get(0));
+	}
+
+	@Override
+	public List<Hotel> findAll() {
+		String sql = "select * from hotels";
+		return jdbcTemplate.query(sql, new HotelRowMapper());
+	}
+
+	@Override
+	public int update(Hotel hotel) {
+		String sql = "UPDATE hotels SET "
+				+ "name = ?, address = ?, total_rooms = ?, available_rooms = ?, price_per_night = ?, updated_at = ? "
+				+ "WHERE id = ?";
+		LocalDateTime now = LocalDateTime.now();
+		int rows = jdbcTemplate.update(sql, hotel.getName(), hotel.getAddress(), hotel.getTotal_rooms(),
+				hotel.getAvailable_rooms(), hotel.getPrice_per_night(), Timestamp.valueOf(now), hotel.getId());
+		if (rows > 0) {
+			hotel.setUpdated_at(now);
+			System.out.println("Hotel updated: id = " + hotel.getId());
+		} else {
+			System.out.println("No hotel found to update with id = " + hotel.getId());
+		}
+		return rows;
+
+	}
+
+	@Override
+	public int deleteById(Long id) {
+		String sql = "DELETE FROM hotels WHERE id = ?";
+		int rows = jdbcTemplate.update(sql, id);
+		if (rows > 0) {
+			System.out.println("Hotel deleted: id = " + id);
+		} else {
+			System.out.println("No hotel found to delete with id = " + id);
+		}
+		return rows;
+
+	}
+
+}

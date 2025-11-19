@@ -1,0 +1,84 @@
+package com.restapiproject.hotelMgmt.controller;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.restapiproject.hotelMgmt.dto.HotelDto;
+import com.restapiproject.hotelMgmt.model.Hotel;
+import com.restapiproject.hotelMgmt.service.HotelService;
+
+import jakarta.validation.Valid;
+
+@RestController // automatically convert responses into JSON response
+@RequestMapping("/api/hotels")
+public class HotelController {
+
+	// is the entry point for all HTTP API requests
+	// GET, POST, PUT, DELETE
+	// set a base URL for all the end-points of this class /api/hotels
+
+	private HotelService hotelService;
+
+	public HotelController(HotelService hotelService) {
+		this.hotelService = hotelService;
+	}
+
+	// dtoToEntity - Entity Hotel
+
+	private Hotel dtoToEntity(HotelDto dto) {
+		Hotel h = new Hotel();
+		h.setId(dto.getId());
+		h.setName(dto.getName());
+		h.setAddress(dto.getAddress());
+		h.setTotal_rooms(dto.getTotal_rooms());
+		h.setAvailable_rooms(dto.getAvailable_rooms());
+		h.setPrice_per_night(dto.getPrice_per_night());
+		return h;
+	}
+
+	private HotelDto entityToDto(Hotel h) {
+		HotelDto dto = new HotelDto();
+		dto.setId(h.getId());
+		dto.setName(h.getAddress());
+		dto.setAddress(dto.getAddress());
+		dto.setTotal_rooms(h.getTotal_rooms());
+		dto.setAvailable_rooms(h.getAvailable_rooms());
+		dto.setPrice_per_night(h.getPrice_per_night());
+		return dto;
+	}
+
+	@GetMapping
+	public ResponseEntity<List<HotelDto>> getAll() {
+		List<Hotel> list = hotelService.getAllHotels();
+		List<HotelDto> dtoList = list.stream().map(this::entityToDto).collect(Collectors.toList());
+
+		// return http response
+		// responseEntity - spring wrapper for HTTP Response
+		// allows you to set status code, headers, body - dto objects
+		return ResponseEntity.ok(dtoList);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<HotelDto> getById(@PathVariable Long id) {
+		//@PathVariable - tell spring to exttract {id}
+		//	from url and assign it to the id variable
+		//	api/hotels/4
+		Hotel h = hotelService.getHotelById(id);
+		HotelDto dto = entityToDto(h);
+		return ResponseEntity.ok(dto);
+	}
+	
+	@PostMapping
+	public create(@Valid @RequestBody) {
+		
+	}
+
+}

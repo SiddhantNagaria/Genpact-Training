@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+           http://www.springframework.org/schema/beans 
+           https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- two service beans    
+   <bean id="emailService" class="com.autowiring.EmailService" />
+   -->
+   <!--<bean id="smsService" class="com.autowiring.SmsService" /> --> 
+   <bean id="messageService" class="com.autowiring.EmailService" />
+    
+   
+   <!-- Autowiring
+   1. Autowire byName -->
+   
+   <bean id="consumerByName" class="com.autowiring.ConsumerBySetter" autowire="byName" />
+   
+   <!--   property name is messageService, find a bean with id="messageService" -->
+  
+ 
+<!-- 2. Autowire byType -->
+<!--   <bean id="sigleMessageService" class= "com.autowiring.EmailService"/> -->
+<bean id="consumerByType" class="com.autowiring.ConsumerBySetter" autowire="byType" />
+
+<!-- 3. Autowire by constructor
+Spring check the constructor parameter types and tries to match them with beans in container
+ -->
+ <bean id="consumerByConst" class="com.autowiring.ConsumerByConstructor" autowire="constructor" />
+<!--  check constructor, MessageService type  -->
+
+
+
+
+</beans>

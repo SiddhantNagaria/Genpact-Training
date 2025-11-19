@@ -1,0 +1,16 @@
+.navbar{
+    background-color: antiquewhite;
+    padding: 10px;
+}
+
+#link{
+    padding: 10px;
+    margin: 5px;
+    border-radius: 12px;
+    background-color: aqua;   
+}
+
+.header{
+    background-color: rgba(238, 230, 7, 0.804);
+    margin-top: -22px;
+}

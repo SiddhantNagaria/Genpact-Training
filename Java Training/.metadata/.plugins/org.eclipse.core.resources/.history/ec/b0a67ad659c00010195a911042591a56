@@ -1,0 +1,9 @@
+package com.restapiproject.hotelMgmt.repository;
+
+import com.restapiproject.hotelMgmt.model.Hotel;
+
+public interface HotelDao {
+
+	Hotel save(Hotel hotel);
+	
+}

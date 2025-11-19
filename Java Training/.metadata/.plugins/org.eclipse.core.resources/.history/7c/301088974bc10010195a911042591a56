@@ -1,0 +1,142 @@
+//var, let, const
+
+/*
+
+var lang = "Js";
+var lang = "Python";
+console.log("using var " + lang);
+
+
+let lang2 = "JS";
+//let lang2 = "Python";
+lang2 = "Python";
+console.log("using let " + lang2);
+
+const pi = 3.14;
+//pi = 3.21;
+console.log("using const " + pi);
+
+function testScope() {
+	if (true) {
+		var x = 10;	//function scope
+		let y = 20;	// block scope
+		const z = 30;	// block scope
+		console.log("from block : ", x);
+		console.log("from block : ", y);
+		console.log("from block : ", z);
+	}
+	console.log("from function : ", x);
+	console.log("from function : ", y);
+	console.log("from function : ", z);
+}
+
+testScope();
+
+*/
+
+
+/*
+//Operators = 
+//arithmetic operator +  - / * % **
+
+//Comparison operators  == != === !==
+	//-> == compare values only
+	//-> === compare value and data type both
+	
+	console.log(5==5);
+	console.log(5==8);
+	console.log(5=="5");
+	console.log(5==="5");
+	console.log(5!=8);
+	console.log(5!="8");
+	console.log(5!==8);
+	console.log(5!=="8");
+	
+	
+	
+// Logical Operators
+//		&& || NOT
+
+let mark = 25;
+console.log(mark>18 && mark <100);
+console.log(mark>18 || mark <100);
+
+//Ternary operator "?"
+
+let marks = 50;
+let result = marks>=50 ? "pass" : "Fail";
+console.log(result);	
+
+*/
+
+//Template Literals
+//	- introduced on ES6 = new way to create strings in Js
+//	- more powerful and flexible than normal strings
+//	- using backticks
+//	- `string value`
+
+let names = "Siddhant Nagaria";
+let  msg = "Hello " + names;
+
+let msg2 = `hello ${names}`
+console.log(msg);
+console.log(msg2);
+
+
+
+
+// Embedded expressions - Math, functions
+let a = 10;
+let b = 20;
+let result = `sum : ${a+b}`;
+console.log(result);
+
+function welcome(named){
+	return `hello ${named}`;
+}
+
+let hello = `Hello ${welcome("Siddhant")}`;
+console.log(hello);
+
+
+// arrays
+let nums = [101,102,404,"Siddhant"];
+console.log(nums);
+
+
+//objects
+let user = {
+	name:"siddant",
+	city:"delhi"
+}
+let info = `User name ${user.name} and city is ${user.city}`;
+console.log(info);
+
+//strings
+let string1 = "JavaSCript ES6";
+console.log("length " + string1.length);
+console.log("uppercase " + string1.toLocaleUpperCase());
+console.log("lowercase " + string1.toLowerCase());
+console.log("substring " + string1.substring(1,6));
+console.log("includs Script " + string1.includes("script"));
+console.log("starts with Java" + string1.startsWith("java"));
+console.log("ends with 6 " + string1.endsWith("6"));
+
+//split and join strngs
+
+let data = "HTML, CSS , JS", React;
+
+let topics = data.split(",");
+console.log("splitted data" + topics);
+
+
+let joineddata = topics.join(" | ");
+console.log("joined data " + joineddata) ;
+
+//relpace and trim
+let msg = "learning Js ES6 in this session";
+console.log("trimmed data " + msg.trim());
+console.log("replace msgg " + msg.replace("ES6","ES7"));
+
+
+

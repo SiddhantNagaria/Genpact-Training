@@ -1,0 +1,50 @@
+package com.springboot.event_registration.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import com.springboot.event_registration.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Controller
+public class EventController {
+
+	    private List<User> registeredUsers = new ArrayList<>();
+
+	    @GetMapping("/register")
+	    public String showForm(Model model) {
+	        model.addAttribute("user", new User());
+	        model.addAttribute("sessions", List.of("Morning", "Afternoon", "Evening"));
+	        model.addAttribute("cities", List.of("Delhi", "Mumbai", "Bangalore", "Hyderabad"));
+	        model.addAttribute("techList", List.of("Java", "Python", "Spring", "React", "Docker"));
+	        return "register";
+	    }
+
+	    @PostMapping("/submit")
+	    public String submitForm(@ModelAttribute("user") User user, Model model) {
+	        // Basic validations
+	        if (!user.getEmail().contains("@") ||
+	            user.getCity() == null ||
+	            user.getSession() == null ||
+	            user.getTechnologies() == null || user.getTechnologies().size() < 2) {
+	            model.addAttribute("error", "Validation failed! Please check your inputs.");
+	            return "register";
+	        }
+
+	        registeredUsers.add(user);
+//	        if (registeredUsers.size() > 5) {
+//	            registeredUsers = registeredUsers.subList(registeredUsers.size() - 5, registeredUsers.size());
+//	        }
+
+	        return "redirect:/summary";
+	    }
+
+	    @GetMapping("/summary")
+	    public String showSummary(Model model) {
+	        model.addAttribute("users", registeredUsers);
+	        return "summary";
+	    }
+}

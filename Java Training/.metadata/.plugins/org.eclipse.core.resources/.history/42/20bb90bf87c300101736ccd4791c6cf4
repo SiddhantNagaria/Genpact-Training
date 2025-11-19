@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>User form</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+	
+	<h1>Welcome to first web page using Spring boot</h1>
+	<br> <br>
+	<div class="nav-links">
+	<a href='/'>Home</a> 
+	<a href='/form'>Form</a> 
+	<a href='/formTag'>Form JSP</a> 
+	<a href='/about'>About</a> 
+	<a href='/contact'>Contact</a>
+	</div>
+		<script src="js/app.js"></script>
+</body>
+</html>

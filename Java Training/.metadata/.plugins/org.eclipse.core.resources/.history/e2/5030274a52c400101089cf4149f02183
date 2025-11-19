@@ -1,0 +1,17 @@
+import { cToF, fToC } from "./math.js";
+import log from "./log.js";
+
+document.getElementById('btnConvert').addEventListener('click'
+	, () => {
+		const input = document.getElementById('temp').value;
+		const mode = document.getElementById('mode').value;
+
+		let result;
+		if (mode == 'cToF') {
+			result = cTOF(Number(input));
+			log(`converted ${input} `);
+		} else if (mode == 'fToC') {
+			result = fToC(Number(input));
+			log("converting F to C");
+		}
+	})

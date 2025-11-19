@@ -1,0 +1,32 @@
+JDBC :
+	Java Database Connectivity
+	Java API - lets Java apps interact with relational DBs
+	JDBC Drivers
+	pre defined interfaces and classes :
+		connect to database
+		send SQL statements
+		retrieve results
+		handles transaction
+
+Java Code - talks to JDBC API - driver - implement that API for DB.
+Server side , desktop apps , microservices - interaction with DB
+Standarized - API across all apps
+
+High level architecture -
+	JDBC API(interface : connection, statement, preparedstatement, callable statement, resultSet, etc.)
+JDBC Driver  Manager / Data Source - locate and connect drivers
+JDBC Driver - implementation - using JAR file, translate JDBC calls
+
+Eclipse - java project - 
+we need to add JAR file
+-MySQL
+
+Employee mgmt. system :
+
+add new emps
+view all emps / search emps by email
+update emp info
+delete emps - leave organization
+generating reports 
+special data types - Boolean , date (hire_date), blob
+

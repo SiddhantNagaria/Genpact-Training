@@ -1,0 +1,81 @@
+import { Component } from "react";
+
+reactJs
+
+js library = used to built user interface UI
+websites, web applications
+
+created by facebook
+focuses on UI
+
+uses a component based architecture
+means that UI is divided into small reusable blocks
+
+Login FormData, Navbar, Button, Product card - each of these are components
+
+Problem - update UI - reloaded - updation - slow process
+        - efficiently update the UI when data changes
+
+React - VDOM - Virtual DOM
+            - copy of real DOM
+            - react compares old state vs new state
+            - only updates the changed parts
+            - result - 
+
+React - build fast, dynamic , interactive web pages using reusable component
+Dashboards , Chat Apps, Ecommerce product filtering .....
+
+Navbar Header Footers
+
+JSX (Javascript + HTML together)
+React allows writing HTML directly inside Javascript using JSX
+
+function firstFunc(){
+
+}
+
+Fb, Instagram, NetFlix, AirBnb...
+Large scale applications
+Build one - reuse everywhere
+
+charts, maps, UI, State management, animations
+
+React DEV Environment:
+Node.js => allows js to run outside the browser
+            - tools, compiler run on Node
+
+npm - node package manager
+    - install react 
+    - manage dependencies
+    - run development servers
+    - build production Apps
+
+React Apps - Single Page Application - only one HTML file 
+
+App - defined a component
+
+index.html - already defined
+
+index.js => Entry point of your applications
+         tell the react to load <app/> component insdie index.html
+
+App.css = specific styling for App.js
+index.css = global styling
+
+Run = npm start
+
+Webpack bundles all files
+JSX => JS
+development server Run
+browser load public / index.html
+index.js = inject App insdie root element
+react render components in the browser
+
+Node = lets run JS code
+npm install dependencies
+react project structure - organizes entire code
+src/ = all coding is development
+
+
+Functional Component = 
+

@@ -1,0 +1,66 @@
+//var, let, const
+
+/*
+
+var lang = "Js";
+var lang = "Python";
+console.log("using var " + lang);
+
+
+let lang2 = "JS";
+//let lang2 = "Python";
+lang2 = "Python";
+console.log("using let " + lang2);
+
+const pi = 3.14;
+//pi = 3.21;
+console.log("using const " + pi);
+
+function testScope() {
+	if (true) {
+		var x = 10;	//function scope
+		let y = 20;	// block scope
+		const z = 30;	// block scope
+		console.log("from block : ", x);
+		console.log("from block : ", y);
+		console.log("from block : ", z);
+	}
+	console.log("from function : ", x);
+	console.log("from function : ", y);
+	console.log("from function : ", z);
+}
+
+testScope();
+
+*/
+
+//Operators = 
+//arithmetic operator +  - / * % **
+
+//Comparison operators  == != === !==
+	//-> == compare values only
+	//-> === compare value and data type both
+	
+	console.log(5==5);
+	console.log(5==8);
+	console.log(5=="5");
+	console.log(5==="5");
+	console.log(5!=8);
+	console.log(5!="8");
+	console.log(5!==8);
+	console.log(5!=="8");
+	
+	
+	
+// Logical Operators
+//		&& || NOT
+
+//Ternary operator "?"
+
+let marks = 50;
+let result = marks>=50 ? "pass" : "Fail";
+console.log(result);	
+
+
+
+

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Form</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>Registration Form</h1>
+
+	<!--  when user clicks submit button , data will be sent to server
+			HTTP Request - post method post request data is set in request body
+	-->
+	<form action="submit" method="post">
+		<label>Name:</label> 
+		<input type="text" name="name" /> <br/><br/>
+		<label>Email:</label> 
+		<input type="email" name="email" /> <br/><br/>
+		<label>Age:</label> 
+		<input type="number" name="age" /> <br/><br/>
+		<button type="submit">Submit</button>
+	</form>
+	<br> <br>
+	<div class="nav-links">
+	<a href='/'>Home</a> 
+	<a href='/form'>Form</a> 
+	<a href='/about'>About</a> 
+	<a href='/contact'>Contact</a>
+	</div>
+	
+</body>
+</html>

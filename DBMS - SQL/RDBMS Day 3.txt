@@ -1,0 +1,550 @@
+Joins, Index, View, Trigger
+
+E-commerce use case :
+
+Customers Table-
+	Orders - will be related to customers
+	Order Items - products, qty, price,
+		    - related to orders table
+
+Products - product id, name, category
+
+
+1. Customer Table -
+
+create table Customer(
+customer_id int primary key,
+name varchar(30) not null,
+email varchar(30)
+);
+
+2. Orders Table	-
+
+create table Orders (
+order_id int primary key,
+customer_id int not null,
+order_date DATE not null,
+total_amount DECIMAL(10,2) not null,
+constraint fk_orders_customer
+foreign key (customer_id) references customer(customer_id)
+on delete cascade
+);
+
+
+3. Orders Items - 
+
+create table Order_Items(
+order_item_id int primary key,
+order_id int , -- FK to orders table
+product_id int,
+qty int,
+unit_price DECIMAL(10,2) not null,
+constraint fk_orders_ordersitems
+foreign key (order_id) references orders(order_id)
+on delete cascade,
+constraint fk_orderitems_product 
+foreign key (product_id) references products(product_id)
+on delete cascade
+);
+
+
+4. Products Table - 
+
+create table products (
+product_id int primary key,
+name varchar(20) not null,
+category varchar(20) not null
+);
+
+
+
+INSERTION -
+
+1. Customer - 
+
+insert into customer
+values
+(1, 'Siddhant Nagaria','siddhant@gmail.com'),
+(2, 'Rahul Soni','rahul@gmail.com'),
+(3, 'Priya Sharma','priya@gmail.com'),
+(4, 'Ravi Verma','ravi@gmail.com'),
+(5, 'Prakhar Agarwal','prakhar@gmail.com');
+
+2. Products Table -
+
+insert into products 
+values
+(101, 'headphones', 'electronics'),
+(102, 'mouse', 'electronics'),
+(103, 'coffee mug', 'home/kitchen'),
+(104, 'water bottle', 'fitness'),
+(105, 'notebook', 'stationery');
+
+3. Orders table -
+
+insert into orders
+values
+(1001, 1, '2025-10-01',1850.00),
+(1002, 2, '2025-10-05',850.00),
+(1003, 5, '2025-10-07',50.00),
+(1004, 3, '2025-10-03',150.00),
+(1005, 4, '2025-10-08',400.00);
+
+
+4. Orders items - 
+
+insert into Order_Items 
+values
+(1, 1001, 101, 1, 1500.00),  -- Siddhant ordered headphones
+(2, 1001, 105, 2, 175.00),   -- Siddhant also ordered notebooks
+(3, 1002, 102, 1, 850.00),   -- Rahul ordered a mouse
+(4, 1003, 103, 1, 50.00),    -- Prakhar ordered a coffee mug
+(5, 1004, 104, 2, 200.00),   -- Priya ordered 2 water bottles
+(6, 1005, 105, 1, 400.00);   -- Ravi ordered a notebook
+
+------------------------------------------------------
+
+JOINS - 
+
+inner join - matching name
+ 
+-> list of all orders with customer name
+-> orderif, orderdate, cusname
+ 
+select o.order_id,o.order_date,o.total_amount,c.name as customer
+from Orders as o
+inner join customer as c
+on o.customer_id = c.customer_id;
+ 
+-----------------------------------------------------
+ 
+full outer join - return rows that match in either table
+   - union of both tables
+ 
+# MYSQL - full outer join can be use -> can use in postGRE sql
+select c.customer_id,c.name,o.order_id
+from customer as c
+OUTER join Orders as o
+on c.customer_id = o.customer_id;
+ 
+solution - left union right
+ 
+select c.customer_id,c.name,o.order_id ,o.order_date
+from customer as c
+LEFT join Orders as o
+on c.customer_id = o.customer_id
+union
+select c.customer_id,c.name,o.order_id ,o.order_date
+from customer as c
+right join Orders as o
+on c.customer_id = o.customer_id;
+ 
+-------------------------------------------------------
+ 
+left join - c -- left ||| o - right
+-> list every customer and any order they placed
+-> customers with no orders - will show NULL values
+-> from left --- we get all tows
+-> from right --- we get match rows.
+ 
+select c.customer_id,c.name,o.order_id ,o.order_date
+from customer as c
+LEFT join Orders as o
+on c.customer_id = o.customer_id;
+ 
+ 
+right join -
+-> keep all right table rows and match from left table
+select c.customer_id,c.name,o.order_id ,o.order_date
+from customer as c
+right join Orders as o
+on c.customer_id = o.customer_id;
+ 
+----------------------------------------------------
+
+JOIN - Multiple Tables  = 
+
+Ordered items with product name and customer name
+-> each row -> one ordered item
+	-> order_id, order_date - orders table
+	-> customer name - customer table
+	-> product name -> products
+	-> qty , unit price -> order_items table
+
+INNER JOIN - only rows that exist in all fout tables
+
+orders o 
+customer c
+products p
+order_items oi
+
+
+select o.order_id, o.order_date, c.name as Customer,
+p.name as product, oi.qty ,oi.unit_price 
+from orders o
+JOIN customer c 
+on o.customer_id = c.customer_id
+JOIN order_items oi
+on oi.order_id = o.order_id
+JOIN products p 
+on p.product_id = oi.product_id;
+--inner join to get ordered items for each order
+-- of any order has multiple items,
+-- it will produce multiple result rows - one row per item
+--for every product get its name, category - metadata(data about data)
+
+
+----------------------------------------------------------------------
+
+JOIN WITH AGGREGATION -
+
+-> join + group by
+	show order totals computed from order_items
+	qty * price
+	sum(qty*unit_price)
+	group by order.id
+
+customer , orders, order_items
+
+fetch order_id, cust name , sum(qty * unit_price) as total calc
+total_amount
+JOIN
+JOIN
+group by order_id
+
+
+SELECT o.order_id, c.name AS customer, o.total_amount, 
+    SUM(oi.qty * oi.unit_price) AS total_calculated_amount
+FROM orders o
+JOIN customer AS c ON o.customer_id = c.customer_id
+JOIN order_items AS oi ON oi.order_id = o.order_id
+GROUP BY o.order_id, c.name, o.total_amount;
+
+
+---------------------------------------------------------------------
+
+-> join + order by -
+	list all customer and their orders
+	orders should be placed between dates : 
+	order_date between '2025-10-05' and '2025-10-10'
+
+fetch all customers even if they have not placed order
+customer_id , customer name , order_id , order_Date
+order by customerid
+
+SELECT
+    c.customer_id, 
+    c.name AS customer, 
+    o.order_id, 
+    o.order_date, 
+    o.total_amount
+FROM customer AS c
+LEFT JOIN orders AS o 
+    ON c.customer_id = o.customer_id 
+    AND o.order_date BETWEEN '2025-10-05' AND '2025-10-10'
+ORDER BY c.customer_id;
+
+----------------------------------------------------------------------
+
+ASSIGNMENT - Self join , cross join
+	implementing using same tables
+
+----------------------------------------------------------------------
+
+INDEX - 
+
+-> DB object that improves speed of retrieval operations on a table
+-> select, where, joins, order by
+
+
+select * from customers where email="ravi@gmail.com";
+-> execute -> 
+-> SQL does a full table scan until it finds the record
+
+Customers :
+
+-> speed up retrieval, locate quickly 
+-> indexes are used to quickly locate rows instead of scanning the entire table
+-> consume extra storage
+-> slower insert / update / delete on tables
+-> too many indexes - slower write operations
+
+Books -> Index -> lookup the topic in index
+
+-> faster lookups - select -> where , join, order by
+-> join - two tables - using indexed columns - run much faster
+
+Syntax :
+
+Create Index index_name 
+ON table_name (col1, col2, .....)
+
+Customers -> 
+
+frequently fetch customers based on email 
+-> create index for the same
+
+CREATE INDEX idx_customers_email
+ON customers(email);
+
+---------------------------------------------------------
+
+Composite Index 
+
+Orders -> order_date , customer_id
+
+Create Index idx_orders_customerid_orderdate
+ON Orders (customer_id, order_date);
+
+-> speed up queries filtering by both cols
+
+select * from orders
+where customer_id = 3 AND order_date = '2025-10-03';
+
+execute it w/o index
+create index
+execute after index
+
+-------------------------------------------------------------
+
+Where actually Index matters in DB :
+
+customers -> email -> often search for customers
+
+orders -> customer_id, order_Date -> joins, filtering the orders by date
+
+order_items -> order_id, product_id -> used for joins
+
+products -> name, category -> used for searches
+
+---------------------------------------------
+
+Add Index using ALter table
+
+ALter Table Products
+Add Index idx_products_category (category);
+
+-------------------------------------------
+
+Show Indexes on Tables :
+
+Show INDEX from customers;
+
+----------------------------------------------
+
+Drop (Remove) and Index :
+
+DROP INDEX idx_name ON Table_name;
+
+DROP INDEX idx_products_category ON products;
+
+
+
+
+
+----------------------------------------------------------------------
+
+
+VIEW -
+	- virtual table - does not store data physically
+	- presents data from one or more tables using a predefined query	- Think - saved SQL query - behaves like a table
+	- select * from view
+	- simplify complex queries
+	- store joins, filters, calculation as a view
+	- restricted data
+
+syntax - 
+
+create view view_customer_info as
+select customer_id, name, email from customer
+where customer_id >3;
+	
+select * from view_customer_info;
+
+
+create view (join view) - combine customers and orders table ----
+	- list of orders with customer name and total amount;
+	- join
+
+create view view_customer_order as
+select c.customer_id, c.name as CustomerName , o.order_id, o.order_date , o.total_amount
+from customer as c
+left join orders as o 
+on c.customer_id = o.customer_id;
+
+select * from view_customer_order;
+
+----------------------------------------------------------------------------
+
+AGGREGATED VIEW - 
+
+-> view show total order amount per customer
+-> fetch - customer id, c name , o totalamount as totalSpent
+-> join - c and o 
+-> even if customer has not spent anything then it should show null 
+-> group by customer id
+
+
+CREATE VIEW view_customer_total_spent AS
+SELECT c.customer_id, c.name AS CustomerName, SUM(o.total_amount) AS totalSpent
+FROM customer AS c
+LEFT JOIN orders AS o ON c.customer_id = o.customer_id
+GROUP BY c.customer_id;
+
+select * from view_customer_total_spent;
+
+----------------------------------------------------------------------------
+
+Multiple table view and totalItemPrice
+
+view - view_order_Details - 
+fetch - order_id, order_date, c.name , p.name, oi.qty, oi.unit_price
+- (oi.qty*oi.unit_price) as Item_total_price
+
+create view view_order_details as
+select o.order_id, o.order_date, c.name as custName, p.name as ProdName, oi.qty, oi.unit_price
+,SUM(oi.qty * oi.unit_price) AS total_calculated_amount
+from customer as c 
+join orders as o
+on c.customer_id = o.customer_id
+join order_items as oi
+ON oi.order_id = o.order_id
+join products as p
+ON p.product_id = oi.product_id
+group by o.order_id, o.order_date, c.name, p.name;
+
+select * from view_order_details;
+
+----------------------------------------------------------------------------
+Assignment = VIEW
+
+	create a view to show all products and how many time they have 
+	been ordered
+
+CREATE VIEW view_product_order_count AS
+SELECT p.product_id,p.name AS product_name, p.category,
+COUNT(oi.order_item_id) AS times_ordered
+FROM products AS p
+LEFT JOIN order_items AS oi ON p.product_id = oi.product_id
+GROUP BY p.product_id;
+
+------------------------------------------------------------------------
+
+Triggers : 
+	trigger is a special stored program in SQL
+	automatically executes (fires) in response to a  certain event
+	event done on a table - like insert, update, deletion
+	automatic reaction to data changed
+
+	maintain data integrity - automatically validate before storing
+	auditing - keep track of insert/ updation. deletion - log table
+
+
+TIMING		EVENT
+before		insert/delete/update  - executed before the event - used for validation
+AFTER		insert/delete/update - execute after the event - used for logging or auditing
+
+Define a trigger - 
+create trigger Trigger_name
+{BEFORE | AFTER} {INSERT | UPDATE | DELETE}
+on table name
+FOR EACH ROW 
+BEGIN
+	-- SQL statements
+END
+
+
+1. Consider product we have stock
+	whenever an item is ordered , added to order_items table,
+	then automatically product's stock should reduce
+Headphones -10
+
+Trigger : 
+
+create trigger trg_reduce_stock
+after insert on order_items
+for each row
+begin
+	update products
+	set stock_qty = stock_qty - new.qty
+	where product_id = new.product_id
+
+end
+
+stock qty column
+- 20,15,14,12,18
+
+step 1-
+	add stock_qty column in products table
+	- 20,15,14,12,18
+step 2-
+	create trigger trg_reduce_stock
+step 3-
+add row in orders table
+add row in order_items table
+trigger will be fired automatically
+
+step 4-
+check products , stock should be reduced
+
+DELIMITER //
+CREATE TRIGGER trg_reduce_stock
+AFTER INSERT ON order_items
+FOR EACH ROW
+BEGIN
+    UPDATE products
+    SET stock_qty = stock_qty - NEW.qty
+    WHERE product_id = NEW.product_id;
+END //
+DELIMITER;
+
+
+alter table products add column(stock_qty int(3));
+
+
+UPDATE products SET stock_qty = 20 WHERE product_id = 101;
+UPDATE products SET stock_qty = 15 WHERE product_id = 102;
+UPDATE products SET stock_qty = 14 WHERE product_id = 103;
+UPDATE products SET stock_qty = 12 WHERE product_id = 104;
+UPDATE products SET stock_qty = 18 WHERE product_id = 105;
+
+
+----------------------------------------------------------------------
+Assgnment -> Create a view show all products and how many time they have ordered.
+
+CREATE VIEW view_product_order_count AS
+SELECT p.product_id,p.name AS product_name, p.category,
+COUNT(oi.order_item_id) AS times_ordered
+FROM products AS p
+LEFT JOIN order_items AS oi ON p.product_id = oi.product_id
+GROUP BY p.product_id;
+
+SHOW FULL TABLES FROM genpactdb WHERE Table_type = 'VIEW';
+----------------------------------------------------------------------
+
+SELF JOIN - 
+	A self join is a join of a table with itself.
+	Useful when comparing rows within the same table.
+
+CROSS JOIN -
+	A cross join returns the Cartesian product of two tables.
+	Every row of the first table is joined with every row of the second table.
+
+
+SELF -
+SELECT p1.product_id AS Product1_ID, p1.name AS Product1_Name, p2.product_id AS Product2_ID, p2.name AS Product2_Name,
+p1.category
+FROM products AS p1
+JOIN products AS p2 
+ON p1.category <> p2.category
+AND p1.product_id <> p2.product_id;
+
+CROSS - 
+
+SELECT c.customer_id, c.name AS CustomerName, p.product_id,
+p.name AS ProductName
+FROM customer AS c
+CROSS JOIN products AS p;
+
+
+ 

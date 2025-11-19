@@ -1,0 +1,71 @@
+MySQL Tools - 
+
+Reverse Engineer - 
+	create an ER diagram(Entity Relationship) or data model from a existing database
+
+DB
+
+visualize the structure of existing db
+document the schema for report
+for learning debuggig
+
+
+-schema -> tables -> related to each other
+
+- visual blueprints of db design
+- ER diagram
+
+
+Kinds of relationships :
+	- one to one(1:1) - one record in one table can be associated with only one record in another table.
+	- one to many (1:M) - one record in table 1 can be associated with many records in another table(2nd)
+
+	- many to many (M:M) - many record in table 1 can be associated with many records in another table(2nd)
+
+--------------------------------------
+
+ECOM DB - 
+one customer can have many orders
+one order can have many order items
+many order items have only one products or one product can have multiple order items
+
+
+
+------------------------------------------------------------------------
+
+Data Export -:
+
+
+-take backup of the database
+-structure (create table statement)
+-data(insert into table commands)
+-save db into .sql file
+
+Export structure and data -> complete backup (both schema and data)
+Export structure only - only tables structure/definition, no data
+Export data only - only the table contents
+
+Folder - SQL Backups - create backup of a db
+
+steps :
+	1. create folder - sql backup
+	2. workbench - server -> data export
+	3. select db
+	4. select dump type - data and structure or any one
+	5. select export location - to a folder containing all files or in a single file
+	6. click - start export
+	7. check the location for output
+
+-----------------------------------------------------------------------
+Data Import - 
+	restore or load a db from an exported .sql file
+	create new db testdbnew
+	from any exported sql file, import its data and structure
+	compare with data export and import and other settings
+
+
+
+
+
+
+

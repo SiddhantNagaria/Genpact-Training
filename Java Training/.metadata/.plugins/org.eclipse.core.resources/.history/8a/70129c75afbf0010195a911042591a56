@@ -1,0 +1,5 @@
+package com.springboot.event_registration.model;
+
+public class User {
+
+}

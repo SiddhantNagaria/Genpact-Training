@@ -1,0 +1,5 @@
+package com.springboot.first_webmvc.model;
+
+public class JSConcepts {
+
+}

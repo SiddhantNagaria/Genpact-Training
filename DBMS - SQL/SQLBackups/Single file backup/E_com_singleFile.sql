@@ -1,0 +1,304 @@
+-- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
+--
+-- Host: localhost    Database: ecom
+-- ------------------------------------------------------
+-- Server version	8.0.39
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `customer`
+--
+
+DROP TABLE IF EXISTS `customer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `customer` (
+  `customer_id` int NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `email` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`customer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customer`
+--
+
+LOCK TABLES `customer` WRITE;
+/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` VALUES (1,'Siddhant Nagaria','siddhant@gmail.com'),(2,'Rahul Soni','rahul@gmail.com'),(3,'Priya Sharma','priya@gmail.com'),(4,'Ravi Verma','ravi@gmail.com'),(5,'Prakhar Agarwal','prakhar@gmail.com');
+/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `order_items`
+--
+
+DROP TABLE IF EXISTS `order_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order_items` (
+  `order_item_id` int NOT NULL,
+  `order_id` int DEFAULT NULL,
+  `product_id` int DEFAULT NULL,
+  `qty` int DEFAULT NULL,
+  `unit_price` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`order_item_id`),
+  KEY `fk_orders_ordersitems` (`order_id`),
+  KEY `fk_orderitems_product` (`product_id`),
+  CONSTRAINT `fk_orderitems_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_orders_ordersitems` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_items`
+--
+
+LOCK TABLES `order_items` WRITE;
+/*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
+INSERT INTO `order_items` VALUES (1,1001,101,1,1500.00),(2,1001,105,2,175.00),(3,1002,102,1,850.00),(4,1003,103,1,50.00),(5,1004,104,2,200.00),(6,1005,105,1,400.00);
+/*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `orders` (
+  `order_id` int NOT NULL,
+  `customer_id` int NOT NULL,
+  `order_date` date NOT NULL,
+  `total_amount` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`order_id`),
+  KEY `fk_orders_customer` (`customer_id`),
+  CONSTRAINT `fk_orders_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orders`
+--
+
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1001,1,'2025-10-01',1850.00),(1002,2,'2025-10-05',850.00),(1003,5,'2025-10-07',50.00),(1004,3,'2025-10-03',150.00),(1005,4,'2025-10-08',400.00);
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `products`
+--
+
+DROP TABLE IF EXISTS `products`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `products` (
+  `product_id` int NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `category` varchar(20) NOT NULL,
+  `stock_qty` int DEFAULT NULL,
+  PRIMARY KEY (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `products`
+--
+
+LOCK TABLES `products` WRITE;
+/*!40000 ALTER TABLE `products` DISABLE KEYS */;
+INSERT INTO `products` VALUES (101,'headphones','electronics',20),(102,'mouse','electronics',15),(103,'coffee mug','home/kitchen',14),(104,'water bottle','fitness',12),(105,'notebook','stationery',18);
+/*!40000 ALTER TABLE `products` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `view_customer_info`
+--
+
+DROP TABLE IF EXISTS `view_customer_info`;
+/*!50001 DROP VIEW IF EXISTS `view_customer_info`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `view_customer_info` AS SELECT 
+ 1 AS `customer_id`,
+ 1 AS `name`,
+ 1 AS `email`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `view_customer_order`
+--
+
+DROP TABLE IF EXISTS `view_customer_order`;
+/*!50001 DROP VIEW IF EXISTS `view_customer_order`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `view_customer_order` AS SELECT 
+ 1 AS `customer_id`,
+ 1 AS `CustomerName`,
+ 1 AS `order_id`,
+ 1 AS `order_date`,
+ 1 AS `total_amount`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `view_customer_total_spent`
+--
+
+DROP TABLE IF EXISTS `view_customer_total_spent`;
+/*!50001 DROP VIEW IF EXISTS `view_customer_total_spent`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `view_customer_total_spent` AS SELECT 
+ 1 AS `customer_id`,
+ 1 AS `CustomerName`,
+ 1 AS `totalSpent`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `view_order_details`
+--
+
+DROP TABLE IF EXISTS `view_order_details`;
+/*!50001 DROP VIEW IF EXISTS `view_order_details`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `view_order_details` AS SELECT 
+ 1 AS `order_id`,
+ 1 AS `order_date`,
+ 1 AS `custName`,
+ 1 AS `ProdName`,
+ 1 AS `qty`,
+ 1 AS `unit_price`,
+ 1 AS `total_calculated_amount`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `view_product_order_count`
+--
+
+DROP TABLE IF EXISTS `view_product_order_count`;
+/*!50001 DROP VIEW IF EXISTS `view_product_order_count`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `view_product_order_count` AS SELECT 
+ 1 AS `product_id`,
+ 1 AS `product_name`,
+ 1 AS `category`,
+ 1 AS `times_ordered`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `view_customer_info`
+--
+
+/*!50001 DROP VIEW IF EXISTS `view_customer_info`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = cp850 */;
+/*!50001 SET character_set_results     = cp850 */;
+/*!50001 SET collation_connection      = cp850_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_customer_info` AS select `customer`.`customer_id` AS `customer_id`,`customer`.`name` AS `name`,`customer`.`email` AS `email` from `customer` where (`customer`.`customer_id` > 3) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_customer_order`
+--
+
+/*!50001 DROP VIEW IF EXISTS `view_customer_order`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = cp850 */;
+/*!50001 SET character_set_results     = cp850 */;
+/*!50001 SET collation_connection      = cp850_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_customer_order` AS select `c`.`customer_id` AS `customer_id`,`c`.`name` AS `CustomerName`,`o`.`order_id` AS `order_id`,`o`.`order_date` AS `order_date`,`o`.`total_amount` AS `total_amount` from (`customer` `c` left join `orders` `o` on((`c`.`customer_id` = `o`.`customer_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_customer_total_spent`
+--
+
+/*!50001 DROP VIEW IF EXISTS `view_customer_total_spent`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = cp850 */;
+/*!50001 SET character_set_results     = cp850 */;
+/*!50001 SET collation_connection      = cp850_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_customer_total_spent` AS select `c`.`customer_id` AS `customer_id`,`c`.`name` AS `CustomerName`,sum(`o`.`total_amount`) AS `totalSpent` from (`customer` `c` left join `orders` `o` on((`c`.`customer_id` = `o`.`customer_id`))) group by `c`.`customer_id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_order_details`
+--
+
+/*!50001 DROP VIEW IF EXISTS `view_order_details`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = cp850 */;
+/*!50001 SET character_set_results     = cp850 */;
+/*!50001 SET collation_connection      = cp850_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_order_details` AS select `o`.`order_id` AS `order_id`,`o`.`order_date` AS `order_date`,`c`.`name` AS `custName`,`p`.`name` AS `ProdName`,`oi`.`qty` AS `qty`,`oi`.`unit_price` AS `unit_price`,sum((`oi`.`qty` * `oi`.`unit_price`)) AS `total_calculated_amount` from (((`customer` `c` join `orders` `o` on((`c`.`customer_id` = `o`.`customer_id`))) join `order_items` `oi` on((`oi`.`order_id` = `o`.`order_id`))) join `products` `p` on((`p`.`product_id` = `oi`.`product_id`))) group by `o`.`order_id`,`o`.`order_date`,`c`.`name`,`p`.`name` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_product_order_count`
+--
+
+/*!50001 DROP VIEW IF EXISTS `view_product_order_count`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = cp850 */;
+/*!50001 SET character_set_results     = cp850 */;
+/*!50001 SET collation_connection      = cp850_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_product_order_count` AS select `p`.`product_id` AS `product_id`,`p`.`name` AS `product_name`,`p`.`category` AS `category`,count(`oi`.`order_item_id`) AS `times_ordered` from (`products` `p` left join `order_items` `oi` on((`p`.`product_id` = `oi`.`product_id`))) group by `p`.`product_id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-11-03 14:55:27

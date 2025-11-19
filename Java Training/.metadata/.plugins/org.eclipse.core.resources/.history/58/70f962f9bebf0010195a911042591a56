@@ -1,0 +1,5 @@
+spring.application.name=event-registration
+
+# JSP view resolver
+spring.mvc.view.prefix= /WEB-INF/jsp/
+spring.mvc.view.suffix = .jsp

@@ -1,0 +1,407 @@
+DML -
+	insertion, updation, deletion
+
+INSERT -
+insert into employee(id, name, department, salary, doj)
+values
+(105, 'Abhinav', 'Commerce', 35000.00, '2025-09-28'),
+(106, 'Hemant', 'Physics', 40000.00, '2025-09-10'),
+(107, 'Satya', 'Biology', 38000.00, '2025-09-15');
+
+
+UPDATE - 
+update employee set salary =  55000.00 where id = 104;
+update employee set department = 'hr' where id = 103;
+update employee set DOJ = '2025-09-30' where id = 102;
+
+DELETE specific row - 
+delete from employee where id = 106;
+
+DELETE all rows using delete and truncate - 
+delete from employee;
+truncate table employee;
+
+DELETE Entire Table - 
+DROP table employee;
+
+-----------------------------------------------------------------------
+
+DQL - 
+
+SELECT - 
+
+all - 
+select * from employee
+
+
+where clause  & OR - 
+select * from employee
+where department = 'civil' or salary >36000;
+
+specific columns - 
+select name, department from employee;
+
+IN - 
+select * from employee 
+where department in ('cse','hr'); 
+// all records which have dept as cse or hr will be selected/ displayed
+
+
+ORDER BY- 
+select * from employee
+order by salary;
+
+order in descending order - 
+select * from employee
+order by salary DESC;
+
+select * from employee
+order by name;
+
+LIKE Operator - 
+select * from employee
+where name like 'I%';
+
+% -> any characters
+A% - any name begins with A and any character after A
+
+select * from employee
+where name like '%I%';
+->all name who have I in between 
+
+GROUP BY - aggregating the data
+
+how many emps are there in each dept ?
+
+select department, Count(*) as totalEMployees from employee
+group by department;
+
+select department, Count(*) as totalEMployees from employee
+group by department order by department;
+
+HAVING CLAUSE - 
+used with group by
+filter the aggregated data then having is used
+
+select department, Count(*) as totalEMployees, avg(salary) 
+from employee
+group by department
+HAVING avg(salary)>40000;
+
+select department, Count(*) as totalEMployees, avg(salary) 
+from employee
+group by department
+HAVING avg(salary)>40000
+order by department;
+
+
+SELECT department, COUNT(*) AS totalEmployees, AVG(salary) AS avgSalary
+FROM employee
+WHERE salary IS NOT NULL
+GROUP BY department
+HAVING AVG(salary) > 40000
+ORDER BY department;
+
+---------------------------------------------------------------------------------
+
+FUNCTIONS - 
+	predefined operations in SQL
+	perform calculations, manipulate data
+	return specific information
+	
+CATEGORIES -
+String functions 
+Date and Time functions
+Numeric functions
+Aggregate function
+
+STRING function - 
+	manipulate or extract information from text (varchar, char)
+	
+	1. CONCAT() - concatenate(combine) strings
+		select concat(name , ' ', department) as Details
+		from employee;
+	
+	2. LENGTH() - return the string length
+		select name, length(name) as length from employee;
+	
+	3. UPPER() - convert string to uppercase(capital letters)
+		select name ,upper(name) as upperName from employee;
+	
+	4. LOWER()
+	
+	5. SUBSTRING() - extract some string
+		select name, substring(name,3,3) as subname from employee; 
+		
+	6. TRIM() - removes leading/ trailing space
+		-> get data from somewhere
+		->	'		Siddhant 			'
+	
+	7. Replace - replace part of a string
+		dept - IT - Information Technology
+		select replace(department, 'CSE' , 'IT') from employee;
+		
+----------------------------------------------------------------------------------
+
+DATE and TIME fuctions -
+
+	1. NOW() - displays current date and time
+		select NOW();
+	
+	2. CURDATE() = current date only
+		- select curdate();
+	
+	3. CURTIME() - current time only
+		- select curtime();
+	
+	4. DATE() - extract date from datetime
+		select date(doj) from employee;
+		
+	5. year() - extract year
+		select year(doj) from employee;
+	
+	6. MONTH() -
+		select month(doj) from employee;
+		
+	7. DAY() - 
+		select day(doj) from employee;
+		
+	8.datediff() - difference between dates
+		- select DATEDIFF(curdate(), doj)
+			as days from employee;
+	
+	9. DATE_ADD() - add interval to date
+		select DOJ, DATE_ADD(DOJ, Intercal 1 YEAR) from employee;
+
+	10. DATE_SUB() - subtract interval -
+		select doj, date_sub(doj, interval 6 month) from employee;
+		
+	
+	30 second
+	20 minute
+	15 day
+	3 week
+	
+	select doj, date_sub(doj, interval 40 second) from employee;
+	select doj, date_sub(doj, interval 50 minute) from employee;
+	select doj, date_sub(doj, interval 4 days) from employee;
+	select doj, date_sub(doj, interval 4 week) from employee;
+	
+	
+-----------------------------------------------------------------------------------------
+
+NUMERIC FUNCTIONS - 
+
+	1. ROUND() - rounds number 
+		select salary, round(salary, 0) from employee;
+		
+	2. CEIL() -> round to up number 
+   		-> select CEIL(55000.35);
+
+	3. FLOOR() -> round down
+   		-> select FLOOR(55676.567);
+   		-> select FLOOR(55676.967);
+
+	4. ABS() -> Absolute value 	
+   		-> select ABS(-15679);
+
+	5. MOD() -> Modulus(remainder)
+   		-> Select MOD(10,3);
+
+	6. POWER() -> exponentiation
+   		-> select Power(2,5);
+
+	7. SQRT() -> Square Root
+   		-> select SQRT(729);
+
+----------------------------------------------------------------------
+
+
+Aggregate Functions :
+
+	1. COUNT()
+
+	2. AVG() - return avg value
+	
+	3. SUM() -> add up all values in a group
+		-> group by dept
+		-> sum(salary) -> IT - 55000 + 50000  + 45000
+		
+	4. MIN() - return minimum value
+		return min(salary)
+	
+	5. max() - return max salary
+	
+	
+	select department, count(*) as TotalEmployees,
+	sum(salary) as totalSalary,
+	avg(salary) as avgSalary,
+	Min(salary) as minSalary,
+	max(salary) as maxSalary
+	from employee 
+	group by department;
+	
+	select department, count(*) as TotalEmployees,
+	sum(salary) as totalSalary,
+	avg(salary) as avgSalary,
+	Min(salary) as minSalary,
+	max(salary) as maxSalary
+	from employee 
+	group by department
+	HAVING avg(salary)>50000
+	order by avgSalary desc;
+	
+	
+---------------------------------------------------------------------------	
+CORRECT ORDER - 
+	SELECT ...
+	FROM ...
+	WHERE ...
+	GROUP BY ...
+	HAVING ...
+	ORDER BY ...
+	LIMIT ...
+--------------------------------------------------------------------------
+
+Table design and management concepts - 
+
+Column options
+constraints
+keys
+data types
+
+COLUMN OPTIONS - 
+	when create table , column options
+	define how column behaves
+	
+Default -> sets a default value if no value is provided
+not null - says value cannot be null
+Auto_Increment -> automatically increases value for each new row
+				used with primary key
+				empID as PK auto_increment
+				insert 1st row -1
+				2nd row - 2 and so on
+Zerofill - pads numeric value with zeros
+			- id int(5) zerofill
+			insert 1 -> 00001,00002
+			
+			
+create table employee_new(
+	emp_id int Auto_Increment,
+	emp_name varchar(40) not null,
+	salary decimal (10,2) default 25000,
+	doj DATE default (current_date),
+	primary key(emp_id)
+);
+	
+insert into employee_new(
+emp_name, salary, doj
+) values
+('Siddhant Nagaria', 60000.00, '2025-09-01');
+
+insert into employee_new(
+emp_name ,salary) 
+values
+('Rahul Gupta', 40010.00);
+
+
+CONSTRAINTS - 
+	ensure data integrity and validity
+	
+	not null - prevents null values
+	primary key - all values are unique and not null
+	unique - ensure all values are unique - cannot repeat value
+	default -assign a default value
+	check - ensure that condition is satisfied
+			check (salary >40000)
+	foreign key - create links to another table
+	
+alter table employee_new add(email varchar(30) unique);
+	
+ALTER TABLE employee_new
+ADD CONSTRAINT chk_salary CHECK (salary > 40000);
+
+update employee_new set email = 'siddhant@abc.com' where emp_id=3;
+
+create table Departments(
+dept_id int primary key auto_increment,
+dept_name varchar(30) unique
+);
+
+insert into departments (dept_name) 
+values
+('IT'),('CS'),('HR'),('Finance');
+
+
+alter table employee_new
+alter column doj set default (current_date);
+
+employee_new = create a FK referring to dept_id
+
+add new column into employees_new -> dept_id int
+foreign key(dept_id) references departments(dept_id)
+
+ALTER TABLE employee_new
+    -> ADD CONSTRAINT fk_dept
+    -> FOREIGN KEY (dept_id) REFERENCES departments(dept_id);
+
+
+Unique key - 
+
+Composite key - emp_id, emp_email
+			  - any column that can uniquely identift is candidate key
+			  - multiple candidate keys
+			  - out of these, one is chosen as a PK
+			  
+Every PK is CK but not every CK becomes PK
+
+---------------------------------------------------------------------------------
+
+JOINS : 
+	Join is used to combine rows from two or more than two tables
+	based on related column
+	PK - FK relationship -> dept_id column 
+	
+emp -
+dept_name - 
+
+Types of join - 
+
+INNER JOIN - 
+	return records that have matching values in both tables
+	alias names for tables - employee_new as e 
+	departments as d
+	
+	select e.emp_name, e.salary , e.email , d.dept_name
+	from employee_new as e 
+	INNER JOIN departments as d
+	ON e.dept_id = d.dept_id;
+	
+ -------------------------------------------------------------------------
+ 
+ Bookstore database :
+ 	create this db
+ 	
+ 	book table
+ 	author table
+ 	
+ 	book table - 
+ 		bookid - pk auto_increment
+ 		title - not null
+ 		genre check - fiction, non-fiction, science, children
+ 		price - decimal check>0
+ 		author_id - fk refer to author table
+ 		
+ 	author table - 
+ 		author_id int pk auto inc
+ 		author name not null
+ 		country - varchar
+ 		email unique
+ 		
+ 	
+ 	insert sample data - 5 rows in each table
+ 	
+ 	perform inner join - display all books with their details 
+ 	and author name country, email also 
+
+---------------------------------------------------------------------------

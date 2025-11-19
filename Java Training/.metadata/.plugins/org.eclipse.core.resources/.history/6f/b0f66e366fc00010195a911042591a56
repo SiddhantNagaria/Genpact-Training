@@ -1,0 +1,36 @@
+package com.restapiproject.hotelMgmt.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.restapiproject.hotelMgmt.model.Hotel;
+import com.restapiproject.hotelMgmt.repository.HotelDao;
+
+public class HotelService {
+
+	private HotelDao dao;
+
+	public HotelService(HotelDao dao) {
+		this.dao = dao;
+	}
+
+	public Hotel addHotel(Hotel hotel) {
+		return dao.save(hotel);
+	}
+
+	public Optional<Hotel> getById(Long id){
+		return dao.findById(id);
+	}
+
+	public List<Hotel> listHotels(){
+		return dao.findAll();
+	}
+
+	public int updateHotel(Hotel hotel) {
+		return dao.update(hotel);
+	}
+
+	int deleteHotel(Long id) {
+		return dao.deleteById(id);
+	}
+}

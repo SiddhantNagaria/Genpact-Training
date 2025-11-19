@@ -1,0 +1,105 @@
+RDBMS -
+	relational database management system
+
+
+Database -
+	collection of data in an organized manner
+	easily accesses, managed, updated
+	empName, id, salary - store it and retreive it
+	
+Relational Database - 
+	that stores data in tables (relations), tabular form.
+	each table represents entity
+	Employee (entity) - id , name , salary
+	Department (entity)
+	
+Terms - 
+	Table - structure that holds data in rows and columns
+	Row- record /tuple
+	Column - id, name, - attributes
+	Unique identifier - EmpID - primary key of the table
+	Foreign key - used to link two tables
+	Employee Department - (id, name)
+	
+Popular RDBMS - 
+	Oracle DB
+	MySQL
+	PostgreSQL
+	MS SQL Server
+	SQLite
+	
+SQL -
+	structured query language
+	used to communicate with relational dbs
+	allows you to -
+		DDL (data definition language) - define and manage db structures
+			-create , alter , delete tables/dbs
+		DML (data manipulation language) - insert data, update, delete
+		DQL (Data Query Language) - query data, fetch E01, E02
+		
+		
+-----------------------------------------------------------------------------------------
+
+DDL Commands - 
+
+create database genpactdb;
+
+show tables;
+
+show databases;
+
+use genpactdb;
+
+drop database genpactdb;
+
+
+DDL commands for Table = 
+
+create table Employee (id int(3) primary key, name varchar(30), department varchar(30), salary decimal (10,2), DOJ date);
+
+describe employee;
+
+Alter table - 
+	add new col, modify existing col , delete col
+
+alter table employee add Email varchar(40);
+
+alter table employee modify salary decimal (12,2);
+
+alter table employee drop column email;
+
+TRUNCATE / DROP table
+
+	truncate - delete data but keeps structure
+	drop - delete entire table from database
+	
+------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 		
+ 
+
+ 
+ 
+	

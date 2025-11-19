@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="create">
+      <h3>Create account</h3>
+      <label
+        >Account Holder
+        <input type="text" id="holderName" placeholder="your name" />
+      </label>
+      <label>
+        Initial Balance
+        <input id="initialBalance" type="number" value="0" min="0" />
+      </label>
+      <button id="createBtn">Create Account</button>
+    </div>
+    <div class="accountOperations" id='accountOperations'>
+      <h3>Account Operations</h3>
+      <p><strong id="accountInfo"></strong></p>
+      <div class="update">
+        <label
+          >Deposit Amount
+          <input type="number" id="depositAmount" value="0" min="0" />
+        </label>
+        <button id="depositBtn">Deposit</button>
+      </div>
+      <div class="update">
+        <label
+          >Withdraw Amount
+          <input type="number" id="withdrawAmount" value="0" min="0" />
+        </label>
+        <button id="withdrawBtn">Withdraw Amount</button>
+      </div>
+      <div>
+        <button id="balanceBtn">Show Balance</button>
+        <button id="closeBtn">Close Account</button>
+      </div>
+    </div>
+    <script src="account.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

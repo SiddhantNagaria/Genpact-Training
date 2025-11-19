@@ -1,0 +1,142 @@
+/*
+	
+	DOM = Document object model
+	
+	tree like representation of the html document , - the browser build when it loads the page.
+	every html element becomes a node
+	Js can read and modify the DOM to change content, structure and style while the page is running
+	
+DOM in JS - programming interface for web based documents 
+	- where each object corresponds to a part of the document - element , attributetext
+	
+enabling interactive and dynamic web features
+
+QUery methods - access DOM nodes
+	
+*/
+
+document.getElementById
+document.getElementsByTagName
+document.getElementsByClassName
+document.querySelector
+document.querySelectorAll
+
+/*
+Events -  action that happen in the browser - click, input, submit, mouseover
+- event occur - the browser creates an event object => sent to event handlers
+*/
+
+
+/*
+
+event.type		//type of element
+event.target 	//actual elemnt that triggered the event
+event.currentTarget		//element the handler is attached to
+event.preventDefault	// prevent the browser default action
+event.stopPropagation			// stop the event moving further
+
+
+*/
+//Event Listeners :
+
+const btnHello = document.getElementById('btn-hello');
+const btnAdd = document.querySelector('#btn-add');
+const btnToggle = document.querySelector("#btn-toggle");
+const form = document.getElementById('demo-form');
+const input = document.getElementById('text-input');
+const itemList = document.getElementById('items-list');
+const log = document.getElementById('log');
+const items = document.querySelectorAll('#items-list.item');
+
+
+function appendLog(message) {
+	const time = new Date().toLocaleTimeString();
+	log.textContent += `\n[${time} ${message}]\n`;
+	log.scrollTop = log.scrollHeight;	// log auto -scrolls
+}
+
+
+//Event listeners
+
+// 	1. hello button click event
+btnHello.addEventListener('click', function(ev) {
+	appendLog('Hello button clicked');
+	alert("Hello from hello button");
+});
+
+//	2. Add Item Button - dynamically add list items
+btnAdd.addEventListener('click', function(ev) {
+	const li = document.createElement("li");
+	li.className = 'item';
+	li.textContent = 'item' + (itemList.children.length + 1);
+	itemList.appendChild(li);
+	appendLog('Added : ' + li.textContent);
+});
+
+//	3. Toggle (show hide) input visibility
+
+btnToggle.addEventListener('click', () => {
+	/*if (input.classList.contains('hidden')) {
+		input.classList.remove('hidden');
+		appendLog('input shown');
+	} else {
+		input.classList.add('hidden');
+		appendLog('input hidden');
+	}*/
+	if (input.style.display === 'none') {
+		input.style.display = 'inline-block';
+		appendLog('input shown');
+	}
+	else {
+		input.style.display = 'none';
+		appendLog('input hidden');
+	}
+});
+
+// 4. submit - form submit preventDefault
+form.addEventListener('submit', function(event) {
+	event.preventDefault();
+	const value = input.value.trim();
+	if (value) {
+		appendLog('form submitted with ' + value);
+		input.value = "";
+	} else {
+		appendLog("form submitted with empty input");
+	}
+})
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+
+//Assignment -  To Do List
+// input box - user type task
+// add task button
+// task get added in a list
+// for every item, there should be a delete button
+
+function addTodo() {
+	const todoInput = document.getElementById("todoInput");
+	const todoText = todoInput.value.trim();
+	if (!todoText) return;
+	const todoList = document.getElementById("todoList");
+	const listItem = document.createElement("li");
+	listItem.className = "todoItem";
+	listItem.textContent = todoText;
+	todoList.appendChild(listItem);
+	todoInput.value = ""; // clear input
+	todoInput.focus();
+
+	const deleteBtn = document.createElement("button");
+	deleteBtn.textContent = "Delete";
+	deleteBtn.style.marginLeft = "10px";
+	deleteBtn.onclick = () => listItem.remove();
+
+
+}
+
+
+
+
+
+
