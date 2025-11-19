@@ -1,9 +1,0 @@
-/*
-	
-	DOM = Document object model
-	
-	tree like representation of the html document , - the browser build when it loads the page.
-	every html element becomes a node
-	Js can read and modify the DOM to change content, structure and style while the page is running
-	
-*/

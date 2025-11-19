@@ -1,5 +1,0 @@
-package com.restapiproject.hotelMgmt.util;
-
-public class HotelRowMapper {
-
-}

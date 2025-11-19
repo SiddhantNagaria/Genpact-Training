@@ -1,5 +1,0 @@
-package com.restapiproject.hotelMgmt.service;
-
-public interface HotelService {
-
-}

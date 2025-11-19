@@ -1,5 +1,0 @@
-package com.restapiproject.hotelMgmt.dto;
-
-public @interface HotelDto {
-
-}

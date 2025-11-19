@@ -1,5 +1,0 @@
-package com.springboot.event_registration.controller;
-
-public class EventController {
-
-}
