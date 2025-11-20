@@ -77,5 +77,36 @@ react project structure - organizes entire code
 src/ = all coding is development
 
 
-Functional Component = 
+Functional Component = props
+-> props -> FC can receive data as well
+No lifecycle
 
+Class components
+classes extend from React.Component
+can hold state as well as they have lifecycle methods
+presentation along with other logic
+older style of creating
+
+-> built in lifecycle methods
+allows us to run code specific points
+
+
+LifeCycle Phases-
+Mounting phases - initialize state ,fetch API data
+                - constructor(), render(), componentDidMount()
+Updating phase -> responds to state/ props changes
+                - shouldComponentUpdate()
+                -ComponentDidUpdate
+unmounting Phase - cleanup, remove event listeners
+                 - componentWillUnmount()
+
+
+
+
+
+
+
+
+
+React Hooks - this is used with functional components
+FC with reacr hooks
