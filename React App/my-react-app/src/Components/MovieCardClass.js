@@ -1,27 +1,30 @@
 import React, { Component } from 'react'
 
-export default class MovieCardClass extends Component {
+
+class MovieCardClass extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = { watched: false }
-    console.log('Constructor: MovieCardClass')
   }
-  componentDidMount () {
-    console.log('Component Mounted')
+
+  toggleWatched = () => {
+    this.setState({ watched: !this.state.watched })
   }
-  componentDidUpdate (prevProps, prevState) {
-    console.log('Component Updated')
-  }
-  componentWillUnmount () {
-    console.log('Component will unmount')
-  }
+
   render () {
     return (
-      <div style={{ border: '1 px solid blue', margin: '5px', padding: '5px' }}>
-        <h3>{this.props.title}</h3>
-        <h3>{this.props.genre}</h3>
-        <h3>{this.state.watched ? 'watched' : 'Not Watched'}</h3>
+      <div className='movie-card'>
+        <h3 className='movie-title'>{this.props.title}</h3>
+        <p className='movie-genre'>{this.props.genre}</p>
+        <p className={this.state.watched ? 'watched' : 'not-watched'}>
+          {this.state.watched ? 'Watched ' : 'Not Watched '}
+        </p>
+        <button className='watch-btn' onClick={this.toggleWatched}>
+          {this.state.watched ? 'Mark Unwatched' : 'Mark Watched'}
+        </button>
       </div>
     )
   }
 }
+
+export default MovieCardClass

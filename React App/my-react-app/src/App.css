@@ -32,7 +32,211 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Global styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  margin: 0;
+  padding: 0;
+  color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* App container */
+.App {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Titles */
+.app-title {
+  font-size: 3rem;
+  margin-bottom: 40px;
+  color: #ffdd57;
+  text-align: center;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  animation: glowPulse 2s infinite alternate;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin: 30px 0 20px;
+  color: #ffffff;
+  border-bottom: 3px solid #ffdd57;
+  padding-bottom: 8px;
+  text-align: left;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #ffdd57, #ff6f61);
+  animation: shimmer 3s infinite linear;
+}
+
+/* Movie list layout - GRID */
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
+}
+
+/* Movie card */
+.movie-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(12px);
+  position: relative;
+}
+/* Movie card overlay (FIX) */
+.movie-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,221,87,0.15), rgba(255,111,97,0.15));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+
+  /* IMPORTANT: allow clicks to pass through */
+  pointer-events: none;
+}
+
+/* If you have any glow layer like .card__glow, also add: */
+.card__glow {
+  pointer-events: none;
+}
+
+.movie-card:hover::before {
+  opacity: 1;
+}
+
+.movie-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Movie image */
+.movie-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.movie-card:hover img {
+  transform: scale(1.08);
+}
+
+/* Card content */
+.movie-content {
+  padding: 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Title */
+.movie-title {
+  font-size: 1.5rem;
+  margin: 0 0 10px;
+  color: #ffdd57;
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+/* Genre */
+.movie-genre {
+  font-size: 1rem;
+  margin-bottom: 12px;
+  color: #e0e0e0;
+}
+
+/* Watched status */
+.watched {
+  font-weight: bold;
+  color: #4caf50;
+}
+
+.not-watched {
+  font-weight: bold;
+  color: #f44336;
+}
+
+/* Button */
+.watch-btn {
+  margin-top: auto;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ffdd57, #ff6f61);
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+   position: relative;
+  z-index: 1; /* ensure it's above any background layers */
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.watch-btn:hover {
+  background: linear-gradient(135deg, #ffc107, #ff3d3d);
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glowPulse {
+  0% {
+    text-shadow: 0 0 10px #ffdd57, 0 0 20px #ffdd57;
+  }
+
+  100% {
+    text-shadow: 0 0 20px #ff6f61, 0 0 40px #ff6f61;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+
+  100% {
+    background-position: 200px 0;
   }
 }

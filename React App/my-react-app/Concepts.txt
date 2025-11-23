@@ -1,112 +1,326 @@
-import { Component } from "react";
+import { Component } from "react"
 
-reactJs
+ReactJs
+-> Javascript library - used to built user interface UI
+-> websites , web applications
+-> Created by Facebook
+-> focuses on UI
+-> Uses a Component based architecture
+-> means that UI is divided into small resuable blocks
+-> Login FormData, Navbar, Button, Product Card - each of these are Component
+-> Problem - update UI - reloaded - updation - slow process
+           - efficiently update the UI when data changes
+-> React - VDOM - Virutal DOM
+         - copy of real DOM
+         - React comapres old vs new states
+         - only updates the changed parts
+         - Result - fast UI updation - enhances / smooth user experience
+-> React - build fast, dynamic, interactive web pages using reusable component
+-> Dashboards, Chat Apps, Ecommerce product filtering ....
+NavBAr Header Footers - created once 
+NavBAr Page3
+-> JSX (Javascript + HTML together)
+-> React allows writing HTML directly inside Jaavscript using JSX
 
-js library = used to built user interface UI
-websites, web applications
-
-created by facebook
-focuses on UI
-
-uses a component based architecture
-means that UI is divided into small reusable blocks
-
-Login FormData, Navbar, Button, Product card - each of these are components
-
-Problem - update UI - reloaded - updation - slow process
-        - efficiently update the UI when data changes
-
-React - VDOM - Virtual DOM
-            - copy of real DOM
-            - react compares old state vs new state
-            - only updates the changed parts
-            - result - 
-
-React - build fast, dynamic , interactive web pages using reusable component
-Dashboards , Chat Apps, Ecommerce product filtering .....
-
-Navbar Header Footers
-
-JSX (Javascript + HTML together)
-React allows writing HTML directly inside Javascript using JSX
-
-function firstFunc(){
-
+function firstFunct() {
+    return <h1> Hello from React </h1> ;
 }
-
-Fb, Instagram, NetFlix, AirBnb...
-Large scale applications
-Build one - reuse everywhere
-
-charts, maps, UI, State management, animations
-
-React DEV Environment:
-Node.js => allows js to run outside the browser
-            - tools, compiler run on Node
+ 
+-> Fb, instagram, Netflix, Airbnb,....................
+-> large scale applications
+-> Build once - reuse everywhere
+-> Charts, maps, UI, state management, animations
+ 
+React Dev Environment :
+Node.js - allows JS to run outside the browser
+        - tools, compilers - run on Node
 
 npm - node package manager
     - install react 
     - manage dependencies
     - run development servers
-    - build production Apps
+    - build production apps
 
-React Apps - Single Page Application - only one HTML file 
-
+VS Code
+React Apps - Single Page Applications - only one HTML file
 App - defined a component
-
 index.html - already defined
+index.js -> Entry point of your application
+         -> tell the react to load <App /> component inside index.html
+App.css - specific styling for App.js
+index.css - global styling
+       
 
-index.js => Entry point of your applications
-         tell the react to load <app/> component insdie index.html
+Run - npm start
+webpack bundles all files
+JSX -> JS
 
-App.css = specific styling for App.js
-index.css = global styling
-
-Run = npm start
-
-Webpack bundles all files
-JSX => JS
 development server Run
-browser load public / index.html
-index.js = inject App insdie root element
-react render components in the browser
+browser load public/index.html
+index.js inject <App /> inside the root element
+React render components in the browser
+Node - lets run JS Code
+npm - install dependencies
+React project structure - organizes entire code 
+src/ - all coding is done
 
-Node = lets run JS code
-npm install dependencies
-react project structure - organizes entire code
-src/ = all coding is development
-
-
-Functional Component = props
--> props -> FC can receive data as well
-No lifecycle
-
+Functional Component 
+- simply a JS function that returns JSX
+use that component  - Render the component
+Functional Component - props
+-> props -> FC can recieve data as well
+-> No lifecycle methods
 Class components
-classes extend from React.Component
-can hold state as well as they have lifecycle methods
-presentation along with other logic
-older style of creating
+-> classes extend from React.Component
+-> can hold state as well as they have lifecycle methods
+-> presentation along with other logic
+-> older style of creating
+-> built in lifecycle methods 
+-> allow us to run code at specific points
+-> Lifecycle Phases
+-> Mounting phase -> initialize state, fetch API data
+                  -> constructor(), render(), componentDidMount()
+-> Updating Phase -> Responds to state / props changes
+                  -> shouldComponentUpdate
+                  -> componentDidUpdate
+-> Unmounting Phase -> Cleanup, remove event listeners
+                    -> componentWillUnmount()
+ 
+ 
+-> React Hooks -> this is used with functional component 
+-> functional 
+-> functional wth react hooks
 
--> built in lifecycle methods
-allows us to run code specific points
+JSX styling 
+-> react supports style - inline - quick , small styles
+-> large apps -> CSS File - MovieCard.css
+
+Props -> used to pass data from parent to child
+      -> They are read only 
+      -> child cannot modify them
+      -> passing props/data from App.js
+ 
+State in React ->
+-> local and mutable (change)
+-> use to track to dynamic data in a component
+-> class component -> state is a property of the class
+                   -> this.state -> { watched = false }
+                   -> Toggle button -> click -> not watched -> watched
+ 
+-> functional component -> 
+   -> watched -> keep in FC
+   -> toggle -> FC
+
+-> make use of React Hook - useState
+-> allows you to add state variables in functional components
+-> before React hooks - state managemnt was done only in class components
+import { useState } from "react";
+
+React Fragments : 
+feature in react - allows you to group multple elements returned by a component
+without adding an extra node to the DOM
+render() -> must return a single element
+-> group elements without using any additional DOM element
+-> usefult when HTML -> table, ul, select 
+-> cleaner DOM structure - improve performance
+ 
+Shorthand Syntax :
+-> does not support key props 
+return (
+    <> 
+        <h1>
+        <p>
+    </>
+)
+ 
+Full Syntax :
+<React.Fragment>
+</React.Fragment>
+ 
+Conditional Rendering :
+-> dynamically display content based on state or props
+-> watched -> :? -> ternary operator - done that
+-> logical && operator 
+{ watched && <p> You have seen this movie</p>} -> rendered only when watched is true
+
+React event handling
+<button -> onClick -> directly -> handleClick 
+
+Handle Input Events
+
+-> Form inputs -> Title -> input box 
+<input text -> onChange -> event handler -> set movie Title
+<submit -> alert ?
+ 
+onChange -> updates state as user types
+onSubmit -> prevent default form reload ->
+ 
+Hooks - 2 MovieCard
+ 
+useEffect -
+allows functional components to perform side effects
+Side effects - are operations that interact with outside world
+eg. fetching data, using timers.....
+Takes two arguments :
+1. Callback function(effect) - contains logic for the side effect.
+2. An option array -  array specifies the values that effect depeneds.
+                   - Any of these value can change 
+                   - effect will re Run
+
+by default, useEffect runs after the first render and then it run after every subsequent render
+          - dependencies have state
+
+Use Cases : data fetching - API calls, Timers - setTimeout setInerval, 
+          subscriptions to external system, directly interact with DOM
+Example : Log when movie watched state changes -> useEffect
+ 
+use Reducer -
+alternative to useSate for managing component state
+- useful for complex state logic 
+- state transition that depennds on previous state
+- reducer function - take the current state - and an action object as arguments
+- type of action -> return a new state -> based on action
+- does not modify original state - returns a new state object
+-> Counter = 0 ; initialState
+-> useReducer -> dispatch ->  type : increment, decrement, reset
+
+Example: toggle
+React Router 
+-> SPA -> allows us to build SPA
+-> Page doesnot reload when navigating
+-> only components are replaced
+-> dynamic routes : URLs based on data like /movies/1
+-> Navigation: <Link> or <NavLink> or <a>
+-> Nested Routes : Child routes rendered inside parent routes
+ 
+install -> npm install react-router-dom
+ 
+Three pages :
+Home -> list of movies
+About -> static about pages
+MovieDetails -> dynamic page for each movie
+ 
+ ------------------------------------------------------------------------------------------------------
+
+ HTTP async / await axios
+browser communicates with server over HTTP request - GET, points
+In react call these endpoints to fetch data or post data and then update UI data
 
 
-LifeCycle Phases-
-Mounting phases - initialize state ,fetch API data
-                - constructor(), render(), componentDidMount()
-Updating phase -> responds to state/ props changes
-                - shouldComponentUpdate()
-                -ComponentDidUpdate
-unmounting Phase - cleanup, remove event listeners
-                 - componentWillUnmount()
+AXIOS =>
+popular promise based HTTP client that works in browser and Node
+npm install axios
+automatic JSON parsing for responses
+
+Interceptors => central request/ response handling
+supports signal AbortController , older patterns
+
+making HTTP request to external API
+axios - easy interaction with API
+error handling easy
 
 
+promise based API - async await cleaner code
+request and response interceptors - provide ability to intercept and modift request before
+they are sent and responses before they are handled
+add headers,  error handling , authentication tokens
+GET, POST, PUT ,DELETE
+allows for cancellation of ongoing request - memory leaks
+create a central api instance - base URL, headers, add interceptors
+
+app loads , component, UserList -> fetch users from API - loading indicator
+User form - let you post a new user and update local UI
+HTTP calls -> GET, POST made with a centralised axios client
+client - async / await , errors, and cancellation
 
 
+Error Boundaries :
+special React Components that catch JS errors during Rendering
+and show a fallback UI instead of breaking entire app
+Render phase
+constructors
+Lifecycle methods
+Children components
+created from class Components
 
 
+Instead of wrapping entire app :
+use multiple small error Boundaries
+
+<ErrorBoundary>
+<Navbar/>
+</ErrorBoundary>
+<ErrorBoundary>
+<About/>
+</ErrorBoundary>
+
+Why ?
+protct larger UI sections
+unstable components
+routes
 
 
+Redux Statement =>
+not a react-only library
+standalone state management library
+can work with Angular , Plain JS
 
-React Hooks - this is used with functional components
-FC with reacr hooks
+Redux ? Problmen Solving ?
+React App : 
+    component A has dome data -> passes to B> passes to C -> ........
+    As the application grows - large scale applications
+    Many components which need the same data
+    Passing props -> confusing
+    managing state across components is confusing
+    state updates - unpredictable
+Single place where - 
+    - global data can be stored
+    - component can easily read / update easily
+    - Redux Store -> single place - global data
+
+Core Concepts of Redux :
+1. Store -> single source of truth
+         -> holding entire application's global state
+         -> one Store
+2. Actions -> Plain JS Objects
+           -> define what happened
+           -> {type: "list/addItem", payload :}
+3.  Reducers -> pure functions that update the store
+             -> they take : current store, 
+                            action,
+                            return new state
+                if(action.type==="list/addItem"){
+                    return [...state, action.payload]
+                }
+                return state;
+
+
+Redux - FLOW =>
+Component -> dispatch(Action) -> reducer -> new store -> UI updates
+
+before ToolKit :
+much boilerplate code, manual action creations, store configuration ....
+
+Redux ToolKit RTK :
+    -> official / standard way of using Redux
+
+Features :
+1. createSlice():
+    automatically creates reducer + Actions
+    allows you to change the state safely 
+
+2. ConigureStore() :
+    automatically apply redux devTools, combine multiple Reducers
+
+3. createASyncThunk() - 
+    handle API calls   
+    handles loading , success, error states automatically
+
+Built in immer - 
+state.value+=1;
+redux requires immutability -> RTK handles immutabilityfor the application
+
+Component -> dispatch(Action) -> slice reducer -> updated store -> UI updates
+
+Redux :
+global state -> needed by many components

@@ -1,35 +1,73 @@
-import logo from './logo.svg'
-import './App.css'
-import First from './First'
-import ClickBtn from './ClickBtn'
-import Navbar from './Navbar'
-import Header from './Header'
-import MovieCard from './Components/MovieCard'
-import MovieCardClass from './Components/MovieCardClass'
+// import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Navbar from './Components/Navbar'
+import Home from './pages/Home'
+import About from './pages/About'
+import MovieDetails from './pages/MovieDetails'
+import React, { useState } from 'react'
+import CreateUserForm from './Components/CreateUserForm'
+import UsersList from './Components/UsersList'
+import ErrorBoundary from './Components/ErrorBoundary'
+import TestComponent from './Components/TestComponent'
+import Counter from './features/counter/Counter'
 
 function App () {
-  const movies = [
-    { title: 'Inception', genre: 'Sci-Fi' },
-    { title: 'Harry Poter', genre: 'Fiction' }
-  ]
+  // return (
+  //   <Router>
+  //     <Navbar />
+  //       <Routes>
+  //         <Route path="/" element={<Home />} />
+  //         <Route path="/about" element={<About />} />
+  //         <Route path="/movies/:movieId" element={<MovieDetails />} />
+  //       </Routes>
+  //   </Router>
+
+  // );
+
+  // const [newUsers, setNewUsers] = useState([])
+
+  // function handleUserCreated (user) {
+  //   setNewUsers(prev => [user, ...prev])
+  //   alert(`User Created : ${user.name} (id ${user.id})`)
+  // }
+  // return (
+  //   <div>
+  //     <h1>React Axios - Users fetching</h1>
+  //     <CreateUserForm onUserCreated={handleUserCreated} />
+  //     <br />
+  //     <br />
+  //     <br />
+  //     <br />
+  //     <UsersList />
+  //     {newUsers.length > 0 && (
+  //       <div>
+  //         <h3>Recently created (local)</h3>
+  //         <ul>
+  //           {newUsers.map(u => (
+  //             <li key={u.id}>
+  //               {u.name} - <small>{u.email}</small>
+  //             </li>
+  //           ))}
+  //         </ul>
+  //       </div>
+  //     )}
+  //   </div>
+  // )
+
+
+  // return(
+  //   <div>
+  //     <h1>ErrorBoundary Handling</h1>
+  //     <ErrorBoundary>
+  //       <TestComponent/>
+  //     </ErrorBoundary>
+  //   </div>
+  // )
+
 
   return (
-    <div className='App'>
-      {/* <Navbar/>
-      <Header/>
-      <h1>Welcome to First React App</h1>
-      <First name="Siddhant"/>
-   <ClickBtn/> */}
-
-      <h1>Movie App</h1>
-      <h2>Functional Component</h2>
-      {movies.map((movie, index) => (
-        <MovieCard key={index} title={movie.title} genre={movie.genre} />
-      ))}
-      <h2>Class Component</h2>
-      {movies.map((movie, index) => (
-        <MovieCardClass key={index} title={movie.title} genre={movie.genre} />
-      ))}
+    <div>
+      <Counter/>
     </div>
   )
 }
