@@ -1,0 +1,8 @@
+Backend - 9090
+
+React frontend has to call Backend
+
+in package.json - we need to include a parameer -> proxy
+
+now instead of calling : http://localhost:9090/
+

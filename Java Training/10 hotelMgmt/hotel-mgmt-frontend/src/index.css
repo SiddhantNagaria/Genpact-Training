@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -10,4 +11,225 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+.hotel-form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+}
+
+.hotel-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.hotel-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.hotel-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #555;
+}
+
+.hotel-form input {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.hotel-form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.hotel-form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.hotel-form button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.hotel-form button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+
+/* Container */
+.hotel-list {
+  max-width: 800px;
+  margin: 24px auto;
+  padding: 16px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+/* Search Bar */
+.hotel-list .search {
+  margin-bottom: 16px;
+}
+
+.hotel-list .search form {
+  display: flex;
+  gap: 8px;
+}
+
+.hotel-list .search input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.hotel-list .search input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.hotel-list .search button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.hotel-list .search button[type="button"] {
+  background-color: #6c757d; /* Reset */
+}
+
+.hotel-list .search button:hover {
+  background-color: #0056b3;
+}
+
+.hotel-list .search button[type="button"]:hover {
+  background-color: #545b62;
+}
+
+/* Loading & Error */
+.hotel-list p {
+  margin: 8px 0;
+}
+
+.hotel-list .error {
+  color: #b00020;
+  background: #fdecec;
+  border: 1px solid #f5b5b8;
+  padding: 8px 10px;
+  border-radius: 6px;
+}
+
+/* List reset */
+.hotel-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Empty state (when no hotels and not loading) */
+.hotel-list ul > li {
+  text-align: center;
+  color: #777;
+  padding: 16px;
+  border-radius: 8px;
+  background: #f7f7f7;
+  border: 1px dashed #ddd;
+}
+
+/* Each hotel card */
+.hotel-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px;
+  margin-bottom: 12px;
+  border: 1px solid #e4e4e4;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.hotel-item .info h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  color: #222;
+}
+
+.hotel-item .info p {
+  margin: 3px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Actions (Edit/Delete buttons) */
+.hotel-item .actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.hotel-item .actions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #fff;
+}
+
+.hotel-item .actions button:first-child {
+  background-color: #17a2b8; /* EDIT */
+}
+
+.hotel-item .actions button:last-child {
+  background-color: #dc3545; /* DELETE */
+}
+
+.hotel-item .actions button:first-child:hover {
+  background-color: #138496;
+}
+
+.hotel-item .actions button:last-child:hover {
+  background-color: #b52a36;
+}
+
+/* Small responsive tweaks */
+@media (max-width: 640px) {
+  .hotel-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hotel-list .search form {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hotel-list .search button {
+    width: 100%;
+  }
 }
