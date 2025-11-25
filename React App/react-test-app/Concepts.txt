@@ -1,0 +1,57 @@
+React Testing with Jest
+Jest => Javascript testing framework
+
+- test runner / assertion library
+- run Test for React code
+pure functions / component interactions/ UI behaviour
+
+Jest -
+Test Runner + assertion library + mocking - one package
+created by Facebook - React
+Features -> quick test runs, test isolation, code coverage generation, watch mode for fast analysis
+Integrates easily with Create React App
+
+why test react apps -
+Test component - ensure behave as intended
+testing serves as executable documentation for expected behaviour
+Writing Test -> component responsibilities - public APIs - behave
+
+Types of test -> 
+1.Unit Test :
+    test small units (tiny components, pure functions, utility modules)
+2.Component Test :
+    validate component outpout(rendered, classnames, returned JSX) give some props
+3.Integration Test :
+    Test multiple component together and interactions(child components, hooks)
+    Actual rendering, event handling
+4. DOM/ Behaviour test :
+    Render components into a DOM like environment, query elements, simulate events, assert visible behaviour
+
+Jest works :
+->Test discovery : Jest finds files matching patterns : c1.js -> c1.test.js
+                 : *.test.js
+->isolated environment : each test file runs in its own process to avoid shared state b/w files
+Assertions : expect(value)
+
+
+// integration test :
+small Home package
+fetch users/users from APIs
+App.js 
+route -> /users
+integration test : navigate, interact with Counter, then navigate to users
+//assert that fetched data is shown
+
+//get = hotels list , hotel by id, name
+//post = post new hotel
+//delete - id 
+//put = update hotel 
+//localhost : 8080
+
+//react frontend - localhost 3000
+//react package.json
+
+//backend = CORS (config class)
+
+
+

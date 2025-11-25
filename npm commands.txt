@@ -26,6 +26,12 @@ npx create-react-app@latest my-react-app
 
 npm start
 
+JEST TESTING LIBRARY =>
+
+npm install --save-dev @testing-library/user-event
+
+npm install react@18 react-dom@18 react-router-dom@6
+
 
 
 
