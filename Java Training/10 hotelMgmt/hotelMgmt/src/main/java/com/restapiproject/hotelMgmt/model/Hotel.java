@@ -17,16 +17,13 @@ public class Hotel {
 	public Hotel() {
 	}
 
-	public Hotel(Long id, String name, String address, int total_rooms, int available_rooms, BigDecimal price_per_night,
-			LocalDateTime created_at, LocalDateTime updated_at) {
+	public Hotel(Long id, String name, String address, int total_rooms, int available_rooms, BigDecimal price_per_night) {
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.total_rooms = total_rooms;
 		this.available_rooms = available_rooms;
 		this.price_per_night = price_per_night;
-		this.created_at = created_at;
-		this.updated_at = updated_at;
 	}
 
 	public Long getId() {
